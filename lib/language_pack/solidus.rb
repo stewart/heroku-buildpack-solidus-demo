@@ -25,7 +25,8 @@ class LanguagePack::Solidus < LanguagePack::Rails42
     sh "NOKOGIRI_USE_SYSTEM_LIBRARIES=1 gem install --no-ri --no-rdoc railties"
 
     # We need an absolute path since the gem bin dir isn't in our path
-    sh "/app/vendor/ruby-2.3.0/bin/rails new sandbox --skip-bundle --database=postgresql"
+    rails_path = `ruby -e "v = '~>4.2.0'; gem 'railties', v; puts Gem.bin_path('railties', 'rails', v)"`
+    sh "#{rails_path} new sandbox --skip-bundle --database=postgresql"
 
     sh "cp -r sandbox/* ."
     sh "rm -rf sandbox"
