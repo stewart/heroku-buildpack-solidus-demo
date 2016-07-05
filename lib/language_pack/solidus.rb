@@ -21,8 +21,10 @@ class LanguagePack::Solidus < LanguagePack::Rails42
     # What we're going to do is install railties, and then use that to generate
     # a new rails app in the current directory
 
+    # FIXME: This will need an update for rails 5
+
     # We try to save a second by using the system libxml
-    sh "NOKOGIRI_USE_SYSTEM_LIBRARIES=1 gem install --no-ri --no-rdoc railties"
+    sh "NOKOGIRI_USE_SYSTEM_LIBRARIES=1 gem install --no-ri --no-rdoc railties -v '~> 4.2.0'"
 
     # We need an absolute path since the gem bin dir isn't in our path
     rails_path = `ruby -e "v = '~>4.2.0'; gem 'railties', v; puts Gem.bin_path('railties', 'rails', v)"`.strip
