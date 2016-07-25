@@ -31,7 +31,8 @@ class LanguagePack::Helpers::BundlerWrapper
 
   def install
     fetch_bundler
-    $LOAD_PATH << @path
+    $LOAD_PATH.unshift @path.to_s
+    p $LOAD_PATH
     require "bundler"
     self
   end
