@@ -639,6 +639,7 @@ ERROR
         FileUtils.rm_rf(dir)
       end
       bundler.clean
+      bundler.install
     end
   end
 
