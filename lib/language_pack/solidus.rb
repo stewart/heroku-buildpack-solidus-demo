@@ -1,9 +1,9 @@
 require "language_pack"
 require "language_pack/rails42"
 
-class LanguagePack::Solidus < LanguagePack::Rails42
-  # detects if this is a Rails 4.2 app
-  # @return [Boolean] true if it's a Rails 4.2 app
+class LanguagePack::Solidus < LanguagePack::Rails5
+  # detects if this is a Rails 5 app
+  # @return [Boolean] true if it's a Rails 5 app
   def self.use?
     File.exists?("solidus.gemspec")
   end
@@ -16,7 +16,6 @@ class LanguagePack::Solidus < LanguagePack::Rails42
     # I don't like bundler.
     sh "git init -q"
 
-
     # Ooookay....
     # What we're going to do is install railties, and then use that to generate
     # a new rails app in the current directory
@@ -24,10 +23,10 @@ class LanguagePack::Solidus < LanguagePack::Rails42
     # FIXME: This will need an update for rails 5
 
     # We try to save a second by using the system libxml
-    sh "NOKOGIRI_USE_SYSTEM_LIBRARIES=1 gem install --no-ri --no-rdoc railties:'~>4.2.0'"
+    sh "NOKOGIRI_USE_SYSTEM_LIBRARIES=1 gem install --no-ri --no-rdoc railties:'~>5.0'"
 
     # We need an absolute path since the gem bin dir isn't in our path
-    rails_path = `ruby -e "v = '~>4.2.0'; gem 'railties', v; puts Gem.bin_path('railties', 'rails', v)"`.strip
+    rails_path = `ruby -e "gem 'railties'; puts Gem.bin_path('railties', 'rails')"`.strip
     sh "#{rails_path} new sandbox --skip-bundle --database=postgresql"
 
     sh "cp -r sandbox/* ."
